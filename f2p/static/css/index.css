@@ -1,0 +1,78 @@
+#lblCon1 {
+
+    font-family:Cambria;
+
+}
+#divHead{
+    font-family: Cambria;
+    margin-left: 350px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-color: #51c850;
+    border: solid;
+
+
+
+}
+.ddlClass{
+    width:150px;
+    font-family: Cambria;
+    background-color: #51c850;
+}
+.btnClass {
+    background-color: #4b5257;
+    font-family: Cambria;
+    color: #ffffff;
+    width: 150px;
+    height: 30px;
+    margin-left: 350px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.5s;
+}
+
+#hover {
+    display: none;
+}
+
+#image:hover + #hover {
+    display: block;
+}
+
+#divLeft{
+    margin-left:20px;
+}
+#divRight{
+    margin-left: 350px;
+
+}
+.txtClass{
+    margin-left: 20px;
+    height: 20px;
+    border-radius: 5px;
+
+}
+.btnClass:hover{
+    background-color: #f6f6f6;
+    color: #000000;
+}
+#divLcl{
+    font-family: Cambria;
+    margin-left: 75px;
+    margin-right: 100px;
+    border: solid;
+    padding-left: 40px;
+    margin-top: 10px;
+    width:700px;
+    margin-bottom: 85px;
+}
+#divErr{
+    color:red;
+    font-family: Cambria;
+    font-size: large;
+}
+#divContext{
+    margin-top: 120px;
+    margin-left: 142px;
+    padding-left: 10px;
+}

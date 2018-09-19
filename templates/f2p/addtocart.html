@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add to Cart</title>
+    <style>
+        .lblHead{
+    background-color: black;
+    color: white;
+    padding-bottom: 5px;
+    width:100%;
+    padding-top: 10px;
+    font-family: Cambria;
+    padding-left: 5px;
+
+}
+        body{
+            font-family: "Lucida Calligraphy";
+        }
+.button {
+
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    width: 235px;
+    height: 48px;
+    font-size: 30px;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 2px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+    </style>
+    <script type="text/javascript"href="jquery-3.2.1.min.js">
+        function incrementValue(id)
+{
+    var value = parseInt(document.getElementById(id).value, 10);
+    var pri = parseInt(document.getElementById('vprice').value, 10);
+
+    value = isNaN(value) ? 0 : value;
+    pri = isNaN(pri) ? 0 : pri;
+
+    value=value+0.5;
+    pri=pri*value;
+
+    document.getElementById('qty').value = value;
+    document.getElementById('price').value = pri ;
+}
+function shwDiv(elem){
+      document.getElementById('divType').style.display = "block";
+            document.getElementById('divUser').style.display = "none";
+            document.getElementById('divDetails').style.display = "none";
+      document.getElementById('divUser2').style.display = "none";
+            if(elem.value == 1)
+            {
+                document.getElementById('divUser').style.display = "block";
+                document.getElementById('divDetails').style.display = "block";
+
+            }
+      else if(elem.value == 2)
+          document.getElementById('divUser2').style.display = "block";
+      else if (elem.id=='btnConfirm') {
+                var a = document.getElementById('qty');
+                if ((a.toString()) == 0)
+                    alert("Enter valid quantity");
+
+            }
+}
+
+    </script>
+
+
+</head>
+<body>
+<div class="lblHead">
+    <label>Cart</label>
+</div>
+<div style="border-color: black;margin-top: 10px; border-radius: 10px; border-style: groove;">
+<form></form>
+    <div id="image" style="width:200px;padding-bottom: 20px;padding-left: 100px;margin-top:20px;">
+        <img style="width:300px;height:300px; " src={{ rc.v.img }}>
+        <br/>
+        <label name="vegelbl" style="margin-left: 70px;font-family: 'Lucida Calligraphy'">{{ rc.v.label }}</label>
+    </div>
+    <div style="    margin-left: 499px;
+    margin-top: -79px; font-size: large;">
+        <b><label>Rs. </label><label id="vprice">{{  rc.v.price }}</label><label> per kg</label></b>
+    </div>
+    <div id="desc" style="    margin-left: 469px;
+    padding-right: 408px;
+    align-content: stretch;
+    margin-top: -278px;
+    padding-bottom: 230px;">
+        {{ rc.v.label }} are imported from  {% for w in rc.ff %} {% if w.fruit.label == rc.v.label %} {{ w.farm.area }} {% endif %} {% endfor %} {% for w in rc.ff %} {% if w.vege.label == rc.v.label %} {{ w.farm.area }} {% endif %} {% endfor %}. {{ rc.v.label }} are filled with nutrients like
+        <b>Carbohydrates</b> = {{ rc.n.carbohydrates }} g, <b>Proteins </b>= {{ rc.n.proteins }} g, <b>Energy </b>= {{ rc.n.energy }} kCal,<b>Fats </b>= {{ rc.n.fats }} g,
+        <b>Sugar </b>= {{ rc.n.sugar }} g, <b>Potassium </b>= {{ rc.n.potassium }} mg,<b>Iron </b>= {{ rc.n.iron }} mg and <b>Calcium </b>= {{ rc.n.calcium }} mg<br/>
+
+
+    </div>
+    <div style="margin-left: 703px;
+    margin-top: -210px;
+    padding-bottom: 172px;">
+        {% csrf_token %}
+{#        <label style="margin-left: 300px;margin-top: -150px; padding-bottom: 20px;">Quantity (kgs):</label>#}
+{##}
+{#   <input type="text" id="qty" name="qty"  value="{{ rc.o }}"/>#}
+        <button  id="btnConfirm" style="    margin-left: 349px;
+    margin-top: 75px;
+}" onclick="shwDiv(this)" class="button"><span>Confirm Order</span></button>
+</div>
+
+
+
+
+
+
+</div>
+ <form>
+     {% csrf_token %}
+        <div id="divType" style="display:none; border-color: black;margin-top: 10px; border-radius: 10px; border-style: groove;">
+            <label>User type</label>
+            <select name="ddlUser" onchange="shwDiv(this)">
+                <option value="0">Select Option</option>
+                <option value="1">Registered User</option>
+                <option value="2">Un-Registered User</option>
+            </select>
+{#            <button class="button" name="btnUser"><span>Submit</span></button>#}
+        </div>
+    </form>
+<form method="post" action="{% url 'f2p:btnConfirmOrder' %}">
+    {% csrf_token %}
+    <div id="divUser" style="display:none; border-color: black;margin-top: 10px; border-radius: 10px; border-style: groove;">
+        <label>Enter contact number</label>
+        <input type="text" name="txtContct">
+        <button  onclick="{% url 'f2p:btnConfirmOrder' %}" id="btnContct" class="button" name="btnContct"><span>Submit</span></button>
+    </div>
+</form>
+<form method="post" action="{% url 'f2p:btnConfirmOrder' %}">
+    {% csrf_token %}
+    <div id="divUser2" style="display:none; border-color: black;margin-top: 10px; border-radius: 10px; border-style: groove;">
+        <label>Enter name</label>
+        <input type="text" name="txtNamet"><br/>
+        <label>Select city</label><br/>
+        <form>
+            <input type="radio" name="radioCity" value="Karachi" checked>Karachi<br/>
+            <input type="radio" name="radioCity" value="Lahore">Lahore<br/>
+            <input type="radio" name="radioCity" value="Rawalpindi/Islamabad">Rawalpindi/Islamabad<br/>
+        </form>
+
+
+{#        <input type="text" name="txtNamet"><br/>#}
+        <label>Enter address</label>
+        <input type="text" name="txtAddrt"><br/>
+        <label>Enter contact num</label>
+        <input type="text" name="txtCNumt"><br/>
+{#        <label>Enter name</label>#}
+{#        <input type="text" name="txtNamet"><br/>#}
+        <button  onclick="{% url 'f2p:btnConfirmOrder' %}" class="button" name="btnCName"><span>Submit</span></button>
+    </div>
+</form>
+    <div id="divDetails" style=" border-color: black;margin-top: 10px; border-radius: 10px; border-style: groove;">
+        <label>User Name: </label>
+        <label>{{ rc.user.userName }}</label>
+        <br/>
+        <label>Address: </label>
+        <label>{{ rc.user.address }}</label>
+        <br/>
+        <label>Contact Number: </label>
+        <label>{{ rc.user.contactNum }}</label>
+        <br/>
+        Area: <label>{{ rc.user.area.label }}</label>
+        <br/>
+        City: <label>{{ rc.user.area.city_label.label }}</label>
+
+    </div>
+<div id="divReceipt" style="border-color: black;margin-top: 10px; border-radius: 10px; border-style: groove;">
+<form oninput="x.value=parseFloat(a.value)*parseFloat(b.value)" method="post" action="{% url 'f2p:btnConfirmOrder' %}">
+{% csrf_token %}
+
+{#        <form oninput="x.value=parseFloat(a.value)*parseFloat(b.value)">#}
+        <label>Item: </label>
+        <label id="a">{{ rc.v.label }}</label>
+        <br/>
+        Quantity: <input type="text" id="a" name="a" value="1"> kg(s)
+
+        <br/>
+        <label>Price: </label>
+        <input disabled="disabled" type="number" id="b" value="{{ rc.v.price }}">
+        <br/>
+
+
+            Payment Mode:
+            <br/>
+            <input type="radio" name="payment" value="easypaisa" checked> EasyPaisa<br>
+            <input type="radio" name="payment" value="easypay"> EasyPay<br>
+            <input type="radio" name="payment" value="other"> Other
+    <br/>
+Total Cost: Rs. <output name="x" for="a b" ></output><br/>
+    Enter email address:<input name="email" id="email" type="text">
+    <br/>
+
+<button onclick="{% url 'f2p:btnConfirmOrder' %}" class="button" name="btnCheckout"><span>CheckOut</span></button>
+
+{#        <form method="post" action="{% url 'f2p:btnConfirmOrder' %}">#}
+{#      {% csrf_token %}#}
+{##}
+{##}
+{#        <br/>#}
+{##}
+{#        </form>#}
+
+
+{#<form>#}
+
+</form>
+
+
+</div>
+
+
+
+</body>
+</html>
