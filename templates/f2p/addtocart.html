@@ -101,9 +101,21 @@ function shwDiv(elem){
 
 </head>
 <body>
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}
+
 <div class="lblHead">
     <label>Cart</label>
 </div>
+
 <div style="border-color: black;margin-top: 10px; border-radius: 10px; border-style: groove;">
 <form></form>
     <div id="image" style="width:200px;padding-bottom: 20px;padding-left: 100px;margin-top:20px;">
