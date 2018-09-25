@@ -1,12 +1,29 @@
-<!-- templates/signup.html -->
+{% extends 'base.html' %}
 
-{% block title %}Sign Up{% endblock %}
 
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
-  </form>
+
+<div class="container">
+<h1 class="form-heading">Sign Up Form</h1>
+<div>
+<div class="main-div" style="max-width: 90% !important;">
+    <div class="panel">
+        <div class="login-form" style="padding-bottom: 22px">
+            <h2>Sign Up</h2>
+            <p>Please enter your email and password</p>
+        </div>
+   </div>
+
+        <form id="Login" method="post">
+          {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <div class="login-form">
+                <button type="submit" class="btn btn-primary" style="width: 50%; margin-top: 22px">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</div></div></div>
+
 {% endblock %}
